@@ -12,7 +12,7 @@ class TranslateBox extends StatelessWidget {
     this.controller,
   });
 
-  final List<Icon> icons;
+  final List<Widget> icons;
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final String? labelText;
@@ -28,7 +28,7 @@ class TranslateBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         border: Border.all(width: 1, color: Colors.grey),
       ),
-      height: 250,
+      height: 260,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -57,13 +57,9 @@ class TranslateBox extends StatelessWidget {
                 ),
           Spacer(),
           Divider(indent: 10, endIndent: 10),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              spacing: 20,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: icons,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: icons,
           ),
         ],
       ),
