@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:riverpod/riverpod.dart';
 import 'package:translator/infrastructure/translate_text_repository_impl.dart';
 import '../../domain/domain.dart';
@@ -29,5 +31,27 @@ class TranslateTextNotifier extends StateNotifier<AsyncValue<TranslateTextState>
     state = AsyncData(state.value!.copyWith(isDownloading: false, translateTextEntity: TranslateTextEntity(translatedText: translatedText)));
   }
 }
+
+/* forma moderna de trabalhar com riveropod
+class ClasseQualquer extends AsyncNotifier<TranslateTextState> {
+  final TranslateTextUsecase translateTextUsecase;
+  ClasseQualquer({required this.translateTextUsecase});
+
+  @override
+  FutureOr<TranslateTextState> build() {
+    return TranslateTextState(translateTextEntity: null, isDownloading: false);
+  }
+
+  Future<void> translate(TranslateTextParams params) async {
+    state = AsyncLoading();
+    state = await AsyncValue.guard<TranslateTextState>(
+      () async {
+        final translatedText = await translateTextUsecase(params);
+        return state.value!.copyWith(isDownloading: false, translateTextEntity: TranslateTextEntity(translatedText: translatedText));
+      },
+    );
+  }
+}*/
+//final qualquerCoisaProvider = AsyncNotifierProvider<ClasseQualquer, TranslateTextState>(() => ClasseQualquer(translateTextUsecase: TranslateTextUsecase(TranslateTextRepositoryImpl())));
 
 final translateTextProvider = StateNotifierProvider<TranslateTextNotifier, AsyncValue<TranslateTextState>>((ref) => TranslateTextNotifier(TranslateTextUsecase(TranslateTextRepositoryImpl())));

@@ -5,14 +5,25 @@ import 'package:translator/infrastructure/infrastructure.dart';
 import 'package:translator/presentation/providers/providers.dart';
 import '../components/components.dart';
 
-class HomeScreen extends ConsumerWidget {
-  HomeScreen({super.key});
-
-  final controller = TextEditingController();
-  final languages = Language.values;
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  static final controller = TextEditingController();
+  static final languages = Language.values;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     var sourceLanguage = ref.watch(sourceLanguageProvider);
     var targetLanguage = ref.watch(targetLanguageProvider);
     final translateTextProviderAsync = ref.watch(translateTextProvider);
@@ -46,7 +57,9 @@ class HomeScreen extends ConsumerWidget {
                     controller: controller,
                     icons: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          TextToSpeechService.speak(controller.text, language: sourceLanguage.getLanguageCode());
+                        },
                         icon: Icon(Icons.volume_up),
                       ),
                       IconButton(
@@ -70,7 +83,9 @@ class HomeScreen extends ConsumerWidget {
                       isTextField: false,
                       icons: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            TextToSpeechService.speak(data.translateTextEntity?.translatedText ?? "", language: targetLanguage.getLanguageCode());
+                          },
                           icon: Icon(Icons.volume_up),
                         ),
                         IconButton(

@@ -1,7 +1,7 @@
 import 'package:google_mlkit_translation/google_mlkit_translation.dart';
-import 'package:translator/domain/helpers/language.dart';
+import 'package:translator/domain/enums/language.dart';
 
-class LanguageMapper {
+sealed class LanguageMapper {
   static TranslateLanguage mapToMLKit(Language language) {
     switch (language) {
       case Language.english:

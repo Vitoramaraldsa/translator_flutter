@@ -1,4 +1,4 @@
-import 'package:translator/domain/helpers/language.dart';
+import 'package:translator/domain/enums/language.dart';
 
 abstract class TranslateTextRepository {
   Future<String> translate(TranslateTextParams params);
